@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="container-item">
+        <form @submit.prevent="saveHouse" class="form">
+            <h3>House Information</h3>
+            <div class="row g 4">
+               <div class="col-auto">
+                   <label>TITLE</label>
+                   <input type="text" placeholder="Title" v-model="house.title" class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>DESCRIPTION</label>
+                   <input type="text" placeholder="Description" v-model="house.description"  class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>PRICE</label> 
+                   <input type="text" placeholder="Price" v-model="house.price"  class="form-control"/> 
+               </div>
+            </div>
+       
+            <h3>Address</h3>
+            <div class="row g 3">
+               <div class="col-auto">
+                   <label>STREET</label>
+                   <input type="text" placeholder="Street" v-model="house.street"  class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>NAGA CITY</label>
+                   <input type="text" placeholder="City" v-model="house.city"  class="form-control col-auto"/>
+               </div>
+               <div class="col-auto">
+                   <label>PROVINCE</label>
+                   <input type="text" placeholder="Province" v-model="house.province"  class="form-control col-auto"/>
+               </div>
+               <div class="col-auto">
+                   <label>COUNTRY</label>
+                   <input type="text" placeholder="Country" v-model="house.country"  class="form-control col-auto"/>   
+               </div>
+            </div>
+       
+            <h3>Specifications</h3>
+       
+            <div class="row g 3">
+               <div class="col-auto">
+                   <label>LOT AREA</label>
+                   <input type="text" placeholder="Lot Area" v-model="house.lot_area"  class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>FLOOR AREA</label>
+                   <input type="text" placeholder="Floor Area" v-model="house.floor_area"  class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>NO. OF BEDS</label>
+                   <input type="text" placeholder="Bedrooms" v-model="house.beds"  class="form-control"/>
+               </div>
+               <div class="col-auto">
+                   <label>NO. OF BATHROOMS</label>
+                   <input type="text" placeholder="Bathrooms" v-model="house.bathroom"  class="form-control"/>
+               </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container-item">
+        <h1 style="margin-bottom: 20px;">Images</h1>
+        <input style="margin-bottom: 20px" type="file" placeholder="Image Upload" @change="uploadImage"  accept="image/x-png,image/jpeg" multiple/>
+        <div class="image-list">
+            <div v-for="image in images" :key="image.title" style="margin-left: 2px;">
+                <img :src="image" class="image"/>
+            </div>
+            
+            <div v-for="image in house.images" :key="image.title">
+                <img :src="'/../storage/' + image.path" height="150px" class="image"/>
+            </div>
+        </div>
+    </div>
+
+<div class="container-item">
+    <h1 style="margin-bottom: 20px;">Features</h1>
+
+    <label>Features</label>
+    <input type="text" placeholder="feature" v-model="feature"/>
+    <button @click="addFeature">Add</button>
+
+    <table class="table">
+        <thead>
+            <th>#</th>
+            <th>Feature</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <tr v-for="(feature,index) in house.features" :key="index" >
+                <td>{{index+1}}</td>
+                <td>{{feature.feature}}</td>
+                <td>
+                   <button @click="deleteFeature(feature.id)">Delete</button>
+                </td>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
+
+<div class="container-item">
+    <h1>Agent</h1>
+    <select>
+        <option value="">Mr. Eric Vida</option>
+    </select>
+</div>
+ <button @click="saveListing()">Save</button>
+</div>
+

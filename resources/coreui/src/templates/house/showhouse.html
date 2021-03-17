@@ -1,0 +1,22 @@
+<template>
+    <div>
+        <p>{{house.title}}</p>
+        <p>{{house.description}}</p>
+    </div>
+</template>
+
+<script>
+    export default{
+        data(){
+            return{
+                house : {}
+            }
+        },
+        getHouse(){
+            let id = this.$route.params.id
+            this.axios.get(`house/search/${id}`).then(response => {
+                this.house = response.data
+            })
+        },
+    }
+</script>

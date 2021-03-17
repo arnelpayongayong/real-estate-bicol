@@ -1,0 +1,30 @@
+<div class="house-list">
+    <table class="table table-striped">
+        <thead>
+            <th>Listing ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Address</th>
+            <th>Bedrooms</th>
+            <th>Bathrooms</th>
+            <th>Actions</th>
+        </thead>
+
+        <tbody>
+            <tr v-for="(house, index) in houses" :key="index">
+                <td>{{house.id}}</td>
+                <td>{{house.title}}</td>
+                <td>{{house.description}}</td>
+                <td>{{house.price}}</td>
+                <td>{{house.street + ' ' + house.city + ' ' + house.country}}</td>
+                <td>{{house.beds}}</td>
+                <td>{{house.bathroom}}</td>
+                <td>
+                    <button><router-link :to="{path : `/houses/edit/${house.id}`}">Edit</router-link></button>
+                    <button>Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

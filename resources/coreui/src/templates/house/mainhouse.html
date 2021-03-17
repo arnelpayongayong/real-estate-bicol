@@ -1,0 +1,206 @@
+<div>
+    <!-- <nav style="width: 100%;position: relative;margin-bottom: 20px;">
+        <h1 style="position: absolute;left: 10px;">Logo</h1>
+
+        <ul>
+            <li>Home</li>
+            <li>Contact</li>
+            <li>About</li>
+        </ul>
+        <a style="position: absolute;right: 10px;"><i class="fa fa-bars" aria-hidden="true" style="visibility:hidden"></i></a>
+    </nav> -->
+
+    <nav>
+        <h1>Logo</h1>
+        
+        <ul>
+            <li><a href="http://">Home</a></li>
+            <li><a href="http://">Contact</a></li>
+             <li><a href="http://">About</a></li>
+        </ul>
+    
+    </nav>
+
+   <section>
+        <div class="search">
+           <div class="search-address">
+                <div class="search-item">
+                    <label>Country</label>
+                    <input type="text" placeholder="Country"/>
+                </div>
+
+                <div class="search-item">
+                    <label>Province</label>
+                    <input type="text" placeholder="Province"/>
+                </div>
+
+                <div class="search-item">
+                    <label>City</label>
+                    <input type="text" placeholder="City"/>
+                </div>
+
+                <div class="search-item">
+                    <label>Listing Type</label>
+                    <select>
+                        <option>HOUSE AND LOT</option>
+                        <option>CONDIMINIUM</option>
+                        <option>LAND</option>
+                        <option>LOT</option>
+                    </select>
+                </div>
+           </div>
+
+            <div class="search-price">
+                <div class="search-item">
+                    <label>Price Range</label>
+                    <div class="price-range">
+                        <div style="margin-right: 3%;">
+                            <input type="text" placeholder="Minimum" />
+                        </div>
+                        <div>
+                            <p>to</p>
+                        </div>
+                        <div  style="margin-left: 3%;">
+                            <input type="text" placeholder="Maximum"/>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="search-item">
+                <button class="search-btn">SEARCH</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+         <h1 class="content-title">HOUSE AND LOT</h1>
+
+         <div class="house-lot-content" >
+            <div class="house-item" v-for="(house,index) in houseAndLot" :key="index" @click="showHouse(house.id)">
+                <div class="body">
+                    <template v-if="house.images.length">
+                         <img :src="'/../storage/' + house.images[0].path" class="image card-img-top"/>
+                    </template>
+                    <template v-else>
+                        none
+                    </template>
+                    <h1>₱ {{new Intl.NumberFormat().format(house.price)}}</h1>
+                </div>
+                <div class="footer">
+                    <div class="footer-details">
+                        <label>BEDS {{house.beds}}</label>
+                        <label>BATHROOM {{house.bathroom}}</label>
+                        <label>LOT AREA {{house.lot_area}} sqft</label>
+                    </div>
+                    <div class="footer-address">
+                        <p>{{house.street}}</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+    </section>
+
+    <section class="content">
+        <h1 class="content-title">CONDOMINIUM</h1>
+
+        <div class="house-lot-content" >
+           <div class="house-item" v-for="(house,index) in houses" :key="index">
+               <div class="body">
+                   <template v-if="house.images.length">
+                        <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>
+                   </template>
+                   <template v-else>
+                       none
+                   </template>
+                   <h1>₱ {{new Intl.NumberFormat().format(house.price)}}</h1>
+               </div>
+               <div class="footer">
+                   <div class="footer-details">
+                       <label>BEDS {{house.beds}}</label>
+                       <label>BATHROOM {{house.bathroom}}</label>
+                       <label>LOT AREA {{house.lot_area}} sqft</label>
+                   </div>
+                   <div class="footer-address">
+                       <p>{{house.street}}</p>
+                   </div>
+               </div>
+           </div>
+        </div>
+
+   </section>
+
+   <section class="content">
+        <h1 class="content-title">LOT</h1>
+        <div class="house-lot-content" >
+        <div class="house-item" v-for="(house,index) in houses" :key="index">
+            <div class="body">
+                <template v-if="house.images.length">
+                        <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>
+                </template>
+                <template v-else>
+                    none
+                </template>
+                <h1>₱ {{new Intl.NumberFormat().format(house.price)}}</h1>
+            </div>
+            <div class="footer">
+                <div class="footer-details">
+                    <label>BEDS {{house.beds}}</label>
+                    <label>BATHROOM {{house.bathroom}}</label>
+                    <label>LOT AREA {{house.lot_area}} sqft</label>
+                </div>
+                <div class="footer-address">
+                    <p>{{house.street}}</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <section class="content">
+        <h1 class="content-title">LAND</h1>
+
+        <div class="house-lot-content" >
+        <div class="house-item" v-for="(house,index) in houses" :key="index">
+            <div class="body">
+                <template v-if="house.images.length">
+                        <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>
+                </template>
+                <template v-else>
+                    none
+                </template>
+                <h1>₱ {{new Intl.NumberFormat().format(house.price)}}</h1>
+            </div>
+            <div class="footer">
+                <div class="footer-details">
+                    <label>BEDS {{house.beds}}</label>
+                    <label>BATHROOM {{house.bathroom}}</label>
+                    <label>LOT AREA {{house.lot_area}} sqft</label>
+                </div>
+                <div class="footer-address">
+                    <p>{{house.street}}</p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+
+    <footer>
+      <div class="footer-item">
+        <h1>CONTACT US</h1>
+        <p>(050) 999-332</p>
+        <p>+63 999 9999 991</p>
+
+        <h1>Follow us</h1>
+        <i class="fab fa-facebook-square"></i>
+      </div>
+
+      <div class="footer-item">
+        <h1 style="text-align: center">Logo</h1>
+      </div>
+    </footer>
+</div>
