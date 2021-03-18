@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\House;
+use App\Models\Agent;
 use Exception;
 use Illuminate\Http\Request;
 use Throwable;
+
+use Mail;
 
 class HouseController extends Controller
 {
@@ -67,7 +70,8 @@ class HouseController extends Controller
                 'beds' => $request->beds,
                 'bathroom' => $request->bathroom,
                 'listing_type' => $request->listingType,
-                'is_sold' => 0
+                'is_sold' => 0,
+                'agent_id' => $request->agentID
                 ]);
         }
         catch(Throwable $e){
@@ -105,6 +109,7 @@ class HouseController extends Controller
         
         $house = House::find($id);
 
+        $house->agent->images;
         foreach($house->images as $image)
         {
 
@@ -124,9 +129,29 @@ class HouseController extends Controller
      * @param  \App\House  $house
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, House $house)
+    public function update(Request $request, $id)
     {
         //
+       
+        $house = House::find($id);
+        $house->floor_area = $request->floor_area; 
+        $house->lot_area = $request->lot_area;
+        $house->price = $request->price;
+        $house->title = $request->title;
+        $house->description = $request->description;
+        $house->street = $request->street;
+        $house->city = $request->city;
+        $house->province = $request->province;
+        $house->country = $request->country;
+        $house->beds = $request->beds;
+        $house->bathroom = $request->bathroom;
+        $house->listing_type = $request->listingType;
+        $house->is_sold = 0;
+        $house->agent_id = $request->agentID;
+        $house->save();
+
+        return response()->json(['house' => $house,'status' => 200], 200);
+
     }
 
     /**
@@ -138,5 +163,23 @@ class HouseController extends Controller
     public function destroy(House $house)
     {
         //
+    }
+
+    public function sendEmail(Request $request)
+    {   
+        $data = array(
+            'name'=> $request->name,
+            'email' => $request->email
+        );
+        
+
+        Mail::send(['html'=>'mail'], $data, function($message) use($request) {
+           $message->to('audjeanrealty2020@gmail.com','audjeanrealty')->subject
+              ("Hi I'm Interested");
+           $message->from('arneljoshua.payongayon@unc.edu.ph','Arnel Joshua Payongayong');
+        });
+        // echo "Basic Email Sent. Check your inbox.";
+      
+        return "Success";
     }
 }

@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 Route::post('house/create','HouseController@store');
 Route::get('house/index','HouseController@index');
 Route::get('house/search/{id}','HouseController@edit');
-
+Route::put('house/edit/{id}','HouseController@update');
 // AUTH
 
 Route::post('auth/register', 'AuthController@register');
@@ -69,3 +69,9 @@ Route::post('image/store','ImageController@store');
 Route::post('feature/store','FeatureController@store');
 
 Route::delete('feature/{id}', 'FeatureController@destroy');
+
+
+Route::post('agent/store','AgentController@store');
+Route::get('agent/list','AgentController@index');
+
+Route::post('sample/email','HouseController@sendEmail');

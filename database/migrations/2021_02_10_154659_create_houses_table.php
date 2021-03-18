@@ -28,6 +28,7 @@ class CreateHousesTable extends Migration
             $table->integer('bathroom');
             $table->string('listing_type');
             $table->integer('is_sold');
+            $table->integer('agent_id');
             $table->timestamps();
         });
     }

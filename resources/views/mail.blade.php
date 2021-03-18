@@ -42,7 +42,8 @@ $style = [
       <p>Terms and Conditions apply.</p>
       <p>Per DTI-FTEB Permit No. 12771 series of 2018</p> --}}
 
-      <a href="{{url('submission/confirmation?code=' . urlencode(encrypt($promo_submission->email_address) )) }}">Click to Confirm</a>
+      <h1>Hi, {{ $name }}</h1>
+      l<p>Sending Mail from Laravel.</p>
 
     </div>
 

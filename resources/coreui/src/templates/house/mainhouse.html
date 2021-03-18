@@ -11,7 +11,7 @@
     </nav> -->
 
     <nav>
-        <h1>Logo</h1>
+        <h1>Audjean Realty</h1>
         
         <ul>
             <li><a href="http://">Home</a></li>
@@ -68,7 +68,7 @@
     
             </div>
             <div class="search-item">
-                <button class="search-btn">SEARCH</button>
+                <button class="search-btn" @click="search">SEARCH</button>
             </div>
         </div>
     </section>
@@ -77,7 +77,7 @@
          <h1 class="content-title">HOUSE AND LOT</h1>
 
          <div class="house-lot-content" >
-            <div class="house-item" v-for="(house,index) in houseAndLot" :key="index" @click="showHouse(house.id)">
+            <div class="house-item" v-for="(house,index) in houses" :key="index" @click="showHouse(house.id)" v-if="house.listing_type == 'House and Lot'">
                 <div class="body">
                     <template v-if="house.images.length">
                          <img :src="'/../storage/' + house.images[0].path" class="image card-img-top"/>
@@ -106,7 +106,7 @@
         <h1 class="content-title">CONDOMINIUM</h1>
 
         <div class="house-lot-content" >
-           <div class="house-item" v-for="(house,index) in houses" :key="index">
+           <div class="house-item" v-for="(house,index) in houses" :key="index" v-if="house.listing_type == 'Condominium'">
                <div class="body">
                    <template v-if="house.images.length">
                         <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>
@@ -134,7 +134,7 @@
    <section class="content">
         <h1 class="content-title">LOT</h1>
         <div class="house-lot-content" >
-        <div class="house-item" v-for="(house,index) in houses" :key="index">
+        <div class="house-item" v-for="(house,index) in houses" :key="index" v-if="house.listing_type == 'Lot'">
             <div class="body">
                 <template v-if="house.images.length">
                         <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>
@@ -163,7 +163,7 @@
         <h1 class="content-title">LAND</h1>
 
         <div class="house-lot-content" >
-        <div class="house-item" v-for="(house,index) in houses" :key="index">
+        <div class="house-item" v-for="(house,index) in houses" :key="index" v-if="house.listing_type == 'Land'">
             <div class="body">
                 <template v-if="house.images.length">
                         <img :src="'/../storage/' + house.images[0].path" class="image  card-img-top"/>

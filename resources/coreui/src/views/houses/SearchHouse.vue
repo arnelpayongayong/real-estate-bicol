@@ -1,28 +1,144 @@
-<template src="../../templates/house/mainhouse.html">
+<template>
+   <div>
+       <div>
+    <!-- <nav style="width: 100%;position: relative;margin-bottom: 20px;">
+        <h1 style="position: absolute;left: 10px;">Logo</h1>
 
+        <ul>
+            <li>Home</li>
+            <li>Contact</li>
+            <li>About</li>
+        </ul>
+        <a style="position: absolute;right: 10px;"><i class="fa fa-bars" aria-hidden="true" style="visibility:hidden"></i></a>
+    </nav> -->
+
+    <nav>
+        <h1>Audjean Realty</h1>
+        
+        <ul>
+            <li><a href="http://">Home</a></li>
+            <li><a href="http://">Contact</a></li>
+             <li><a href="http://">About</a></li>
+        </ul>
+    
+    </nav>
+
+   <section>
+        <div class="search">
+           <div class="search-address">
+                <div class="search-item">
+                    <label>Country</label>
+                    <input type="text" placeholder="Country" v-model="search.country"/>
+                </div>
+
+                <div class="search-item">
+                    <label>Province</label>
+                    <input type="text" placeholder="Province" v-model="search.province"/>
+                </div>
+
+                <div class="search-item">
+                    <label>City</label>
+                    <input type="text" placeholder="City" v-model="search.city"/>
+                </div>
+
+                <div class="search-item">
+                    <label>Listing Type</label>
+                    <select v-model="search.listing_type">
+                        <option value="House and Lot">HOUSE AND LOT</option>
+                        <option value="Condominium">CONDIMINIUM</option>
+                        <option value="Land">LAND</option>
+                        <option value="Lot">LOT</option>
+                    </select>
+                </div>
+           </div>
+
+            <div class="search-price">
+                <div class="search-item">
+                    <label>Price Range</label>
+                    <div class="price-range">
+                        <div style="margin-right: 3%;">
+                            <input type="number" placeholder="Minimum" v-model="search.minPrice"/>
+                        </div>
+                        <div>
+                            <p>to</p>
+                        </div>
+                        <div  style="margin-left: 3%;">
+                            <input type="number" placeholder="Maximum" v-model="search.maxPrice"/>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+            <div class="search-item">
+                <button class="search-btn" @click="searchHouse">SEARCH</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+         <h1 class="content-title">HOUSE AND LOT</h1>
+
+         <div class="house-lot-content" >
+            <div class="house-item" v-for="(house,index) in searchHouses" :key="index" @click="showHouse(house.id)">
+                <div class="body">
+                    <template v-if="house.images.length">
+                         <img :src="'/../storage/' + house.images[0].path" class="image card-img-top"/>
+                    </template>
+                    <template v-else>
+                        none
+                    </template>
+                    <h1>₱ {{new Intl.NumberFormat().format(house.price)}}</h1>
+                </div>
+                <div class="footer">
+                    <div class="footer-details">
+                        <label>BEDS {{house.beds}}</label>
+                        <label>BATHROOM {{house.bathroom}}</label>
+                        <label>LOT AREA {{house.lot_area}} sqft</label>
+                    </div>
+                    <div class="footer-address">
+                        <p>{{house.street}}</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+    </section>
+
+    <footer>
+      <div class="footer-item">
+        <h1>CONTACT US</h1>
+        <p>(050) 999-332</p>
+        <p>+63 999 9999 991</p>
+
+        <h1>Follow us</h1>
+        <i class="fab fa-facebook-square"></i>
+      </div>
+
+      <div class="footer-item">
+        <h1 style="text-align: center">Logo</h1>
+      </div>
+    </footer>
+</div>
+   </div>
 </template>
 
 <script>
 export default {
     data(){
         return{
-            houses : []
+            houses : [],
+            searchHouses : [],
+            search : {
+                country : '',
+                province : '',
+                city : '',
+                minPrice : 100000,
+                maxPrice : 100000,
+                listing_type : ''
+            }
         }
     },
-    computed:{
-        houseAndLot(){
-            return this.houses.map(house => {
-                if(house.listing_type == 'House and Lot')
-                    return house
-            })
-        },
-        lots(){
-            return this.houses.map(house => {
-                if(house.listingType == 'Condominium')
-                    return house
-            })
-        }
-    },
+
     created(){
         this.getHouses()
     },
@@ -31,14 +147,34 @@ export default {
             this.axios.get('house/index')
             .then(response => {
                this.houses = response.data.houses
+               this.searchHouses = response.data.houses
             })
         },
         showHouse(id){
-            console.log(id)
             this.$router.push({ name: 'Show House', params: { id} })
         },
-        search(){
-            this.$router.push({name: 'House'})
+        searchHouse(){
+
+            console.log(this.houses)
+            this.searchHouses = this.houses.filter(house => house.listing_type == this.search.listing_type)
+
+            if(this.search.minPrice != 0 && this.search.maxPrice != 0){
+                 console.log(this.minPrice)
+                 this.searchHouses = this.searchHouses.filter(house => house.price > this.search.minPrice)
+                 this.searchHouses = this.searchHouses.filter(house => house.price < this.search.maxPrice)
+            }
+            if(this.search.country != ''){
+                 this.searchHouses = this.searchHouses.filter(house => house.country == this.search.country)
+            }
+
+            if(this.search.province != ''){
+                 this.searchHouses = this.searchHouses.filter(house => house.province == this.search.province)
+            }
+
+             if(this.search.city != ''){
+                 this.searchHouses = this.searchHouses.filter(house => house.city == this.search.city)
+            }
+            console.log(this.searchHouses)
         }
     },
     filters: {

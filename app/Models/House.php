@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class House extends Model
 {
     //
-    protected $fillable = ['floor_area','lot_area','price','description','title','street','city','province','country','beds','bathroom','listing_type','is_sold'];
+    protected $fillable = ['floor_area','lot_area','price','description','title','street','city','province','country','beds','bathroom','listing_type','is_sold','agent_id'];
 
 
     public function images()
@@ -18,5 +18,9 @@ class House extends Model
     public function features()
     {
         return $this->hasMany('App\Models\Feature');
+    }
+
+    public function agent(){
+        return $this->belongsTo('App\Models\Agent');
     }
 }

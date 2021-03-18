@@ -6,6 +6,8 @@
 export default {
     data(){
         return{
+             agent : {images : []},
+             agents: [],
              house : {
                 id : '',
                 title : 'test',
@@ -22,18 +24,36 @@ export default {
                 listingType : 'House and Lot',
                 isSold : '',
                 images : [],
-                features : []
+                features : [],
+                agentID : ''
             },
             id : '',
             images : [],
             imagesFile : [],
             feature : '',
             features : [],
-            counter : 0
+            counter : 0,
+            selectedAgentID : '',
+            agentImage : ''
 
         }
     },
     methods : {
+         changeAgent(){
+             this.agent = this.agents.find(a => a.id == this.selectedAgentID)
+             
+             if(this.agent.images){
+                 console.log(this.agent)
+                 this.agentImage = this.agent.images[0].path
+                 console.log(this.agentImage)
+             }
+         },
+         getAgents(){
+             this.axios.get('/agent/list').then(response => {
+                 this.agents = response.data
+                 this.agent = this.agents[0]
+             })
+         },
          uploadImage(e){
 
                 for(let i = 0; i < e.target.files.length; i++){
@@ -58,6 +78,7 @@ export default {
                 }
             },
         saveHouse(){
+            this.house.agentID = this.selectedAgentID
             this.axios.post('/house/create',this.house).then(response => {
                 this.house = Object.assign({}, this.house,response.data.house)
             })
@@ -109,6 +130,16 @@ export default {
             })
         }
     },
+    created(){
+        this.getAgents()
+          setTimeout(() => {
+                    console.log(this.agents)
+                    if(this.agents.length == 0){
+                        this.$router.push('/agent/create')
+                    }
+          }, 2000)
+        
+    }
 }
 </script>
 

@@ -11,6 +11,10 @@ class Agent extends Model
 
     public function images()
     {
-        return $this->morphMany('App\Models\Image');
+        return $this->morphMany('App\Models\Image','imageable');
+    }
+
+    public function house(){
+        return $this->belongsTo('App\Models\House');
     }
 }

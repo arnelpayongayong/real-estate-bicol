@@ -16,6 +16,9 @@ export default {
                this.houses = response.data.houses
             })
         },
+        newHouse(){
+            this.$router.push('/houses/create')
+        }
     },
     created(){
         this.getHouses()

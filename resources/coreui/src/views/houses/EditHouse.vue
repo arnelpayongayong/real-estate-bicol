@@ -7,20 +7,47 @@
 export default {
     data(){
         return{
-            house : {},
+            house : {
+                listingType : 'House and Lot'
+            },
+            agents : [],
+            agent : {},
+            agentImage : '',
             images : [],
             imagesFile : [],
             feature : '',
             features : [],
-            counter : 0
+            counter : 0,
+            selectedAgentID : ''
 
         }
     },
     methods : {
+        changeAgent(){
+             this.agent = this.agents.find(a => a.id == this.selectedAgentID)
+             
+             if(this.agent.images){
+                 console.log(this.agent)
+                 this.agentImage = this.agent.images[0].path
+                 console.log(this.agentImage)
+             }
+         },
+         getAgents(){
+             this.axios.get('/agent/list').then(response => {
+                 this.agents = response.data
+                 this.agent = this.agents[0]
+             })
+         },
         getHouse(){
             let id = this.$route.params.id
             this.axios.get(`house/search/${id}`).then(response => {
                 this.house = response.data
+            })
+        },
+        updateHouse(){
+            this.house.agentID = this.selectedAgentID
+            this.axios.put(`house/edit/${this.house.id}`,this.house).then(response => {
+                 console.log( 'success')
             })
         },
          uploadImage(e){
@@ -68,6 +95,7 @@ export default {
             this.feature = ''
         },
         saveListing(){
+            this.updateHouse()
             this.saveImage()
             this.saveFeature()
         },
@@ -82,6 +110,7 @@ export default {
         }
     },
     created(){
+        this.getAgents()
         this.getHouse()
     },
 }

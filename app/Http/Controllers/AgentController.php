@@ -15,6 +15,19 @@ class AgentController extends Controller
     public function index()
     {
         //
+        $agents = Agent::all();
+
+        foreach($agents as $agent)
+        {
+            //
+            foreach($agent->images as $image)
+            {
+                //
+            }
+        }
+        
+
+        return $agents;
     }
 
     /**
@@ -41,9 +54,15 @@ class AgentController extends Controller
             'middlename' => $request->middlename,
             'lastname' => $request->lastname,
             'email' => $request->email,
-            'contactNo' => $request->contactNo,
-            'image' => $request->image
-            ];)
+            'contactNo' => $request->contact,
+            'image' => $request->path
+            ]);
+
+
+        return response()->json([
+            'agent' => $agent,
+            'status' => 200
+        ], 200);
     }
 
     /**

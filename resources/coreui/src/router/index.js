@@ -52,7 +52,15 @@ import Houses from '../views/houses/Houses'
 import CreateHouse from '../views/houses/CreateHouse'
 import HouseList from '../views/houses/HouseList'
 import EditHouse from '../views/houses/EditHouse'
-import ShowHouse from '../views/houses/ShowHouse'
+import ShowHouse from '../views/houses/ShowHouse.vue'
+import SearchHouse from '../views/houses/SearchHouse.vue'
+
+//Agent Pages
+import CreateAgent from '../views/agents/CreateAgent.vue'
+import EditAgent from '../views/agents/EditAgent.vue'
+import ListAgent from '../views/agents/ListAgent.vue'
+
+
 Vue.use(Router)
 Vue.use(VueAxios, axios)
 axios.defaults.baseURL = '/api'
@@ -159,7 +167,7 @@ export default new Router({
     name : 'House List',
     component : HouseList,
     meta : {
-      auth : false
+      auth : true
     }
   },
   {
@@ -168,7 +176,7 @@ export default new Router({
     component : EditHouse,
     props: true,
     meta : {
-      auth : false
+      auth : true
     }
   },
   {
@@ -180,14 +188,47 @@ export default new Router({
       auth : false
     }
   },
+  
    {
     path : '/houses/create',
     name : 'New House',
     component : CreateHouse,
     meta : {
+      auth : true
+    }
+   },
+   {
+    path : '/houses/search',
+    name : 'Search House',
+    component : SearchHouse,
+    meta : {
       auth : false
     }
    },
+   {
+      path : '/agent/create',
+      name: 'New Agent',
+      component: CreateAgent,
+      meta: {
+        auth: true
+      }
+   },
+   {
+    path : '/agent/edit',
+    name: 'Edit Agent',
+    component: EditAgent,
+    meta: {
+      auth: true
+    }
+ },
+ {
+  path : '/agent/list',
+  name: 'List Agent',
+  component: ListAgent,
+  meta: {
+    auth: true
+  }
+},
    {
     path: '/registers',
     name: 'Register',
